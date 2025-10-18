@@ -1,3 +1,3 @@
-# Portfolio
-Portfolio assignment
-Looking at Shark Species and Size data between 2000 and 2014, and at Marine Heatwave Incidents. Considers whether there may be a correlation between the two. Shark data contains various measurements for both sexes of 43 species. Marine heatwave data contains date, intensity mean/max, and cumulative intensity.
+This project Looks at Shark Species and Size data between 2000 and 2014, and at Marine Heatwave Incidents between 1982 and 2021. It considers whether there may be a correlation between the two. 
+  Shark data is sourced from the RSM 612 Course & textbook The Analysis of Biological Data, 3rd edition, by Michael Whitlock and Dolph Schluter. It contains various measurements for both sexes of 43 species (columns named (Species, Sex). The numeric length measurements in "tidy_shark" consist of a standardized length (standard_length), total shark length (total_length), and length of fork (fork_length). There is also a column denoting the condition of the shark (Condition), "D" Dead, "P" Poor, "F" Fair, "G" Good, and "E" Excellent. 
+  Marine heatwave data is sourced from the R package "EVR628tools" and contains data on intensity incidents, consisting of mean(intensity_mean), max(intensity_max), and cumulative values(intensity_cumulative).
