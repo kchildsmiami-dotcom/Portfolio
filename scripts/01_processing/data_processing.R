@@ -2,7 +2,7 @@
 library(tidyverse)
 library(EVR628tools)
 #Data         
-shark_data<-read.csv(file="~/EVR 628/Portfolio/data/raw/shark2014.csv")
+shark_data<-read.csv(file="data/raw/shark2014.csv")
 mhw_data<-data_mhw_events
 
 #Cleaning
