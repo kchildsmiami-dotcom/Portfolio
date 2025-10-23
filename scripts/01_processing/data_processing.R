@@ -37,3 +37,6 @@ tidy_shark<-delete.na(shark_filtered, 2)
 common_data<-full_join(tidy_shark,mhw_data, by ="year")
 common_data<-delete.na(common_data, 2)
 
+##Export data
+write.csv(common_data,file="data/processed/shark_mhw_common.csv")
+
