@@ -36,7 +36,9 @@ tidy_shark<-delete.na(shark_filtered, 2)
 ##join to create dataset with common years/dates. Clean up rows with many NA values.
 common_data<-full_join(tidy_shark,mhw_data, by ="year")
 common_data<-delete.na(common_data, 2)
+summary_smhw<- shark_mhw_common|>mutate(Species = fct_lump_n(f = Species, n = 2))
 
 ##Export data
 write.csv(common_data,file="data/processed/shark_mhw_common.csv")
+write.csv(summary_smhw,file="data/processed/summary_mhw.csv")
 
