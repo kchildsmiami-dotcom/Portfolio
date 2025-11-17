@@ -25,7 +25,7 @@ plot(st_geometry(nurse_sf), pch=16, col="pink")
 world <- ne_countries(scale = "medium", returnclass = "sf")
 class(world)
 
-
+#Making the map
 p1<-ggplot(data = world) +
   geom_sf(fill="white")+
   annotation_scale(location = "bl", width_hint = 0.5) +
