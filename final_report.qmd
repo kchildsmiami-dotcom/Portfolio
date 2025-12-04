@@ -1,26 +1,71 @@
 ---
 title: "Final Project Report"
-author: "Katia"
+subtitle: "Portfolio - Analysis on the Correlation of Shark Condition and Marine Heatwave Intensity"
+author: "Katia Childs"
 format: html
 ---
 
-## Quarto
+## Introduction
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Marine Heatwave incidents drastically alter the local environment they occur in for short periods of time by raising the water temperature, causing obvious effects like coral bleaching events. I wondered if there were other longer term effects on less immediately fragile species like sharks. If there was an intense event during the growth period of these sharks, would it have a notable effect on the overall size/condition of the population?
 
-## Running Code
+## Objectives
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+The goal of this portfolio is to compile, analyze, and present data between 2000 and 2014 for marine heatwave intensity and the physical condition, including a general qualitative descriptor("D" Dead, "P" Poor, "F" Fair, "G" Good, and "E" Excellent), and size measurements (total length, and fork length) of 43 species. After grouping the species based on quantity, the remaining grouped into "Nurse", "Caribbean Reef" and "Other".
 
+## Data Sources
+
+This project looks at Marine Heatwave data sourced from the "EVR628tools" r package and shark data sourced from the RSM 612 Course & textbook The Analysis of Biological Data, 3rd edition, by Michael Whitlock and Dolph Schluter.
+
+## Data Processing
+
+The data was processed in a simple manner by renaming columns and sorting the data to clean out bad and weirdly formatted data. Combining the data sets to optimize date comparisons and grouping species data.
+
+A snipet of the filtering process:
 ```{r}
-1 + 1
+#| message: false
+#| warning: false
+library(tidyverse)
+library(EVR628tools)
+shark_data<-read.csv(file="data/raw/shark2014.csv")
+mhw_data<-data_mhw_events
+shark_data<-rename(shark_data,
+       standard_length=Standard.Length,
+       fork_length=Fork.Length,
+      total_length= Total.Length)
+mhw_data<-rename(mhw_data,Date=date_peak)
+shark_filtered<-shark_data%>%
+  filter(sex %in% c("M","F"))  %>%
+  mutate(Date=as.Date(Date,format="%m/%d/%Y"),
+         year=year(Date),
+         Condition=factor(Condition,levels=c("D","P","F","G","E")),
+         sex=factor(sex),
+         Species=factor(Species),
+         fork_length=as.numeric(fork_length),
+         total_length=as.numeric(total_length),
+         standard_length=as.numeric(standard_length)) %>%
+  filter(!is.na(year),!is.na(Condition))
+mhw_data<-mhw_data %>% mutate(Date=as.Date(Date,format="%m/%d/%Y"),
+                              year=year(Date))
 ```
 
-You can add options to executable code like this 
 
-```{r}
-#| echo: false
-2 * 2
-```
+## Main Findings
 
-The `echo: false` option disables the printing of code (only output is displayed).
+The first objective was to compare the intensity date peaks of Marine Heatwave incidents against size changes over time per species.
+
+![Image 1](results/img/comparison_1.png){fig-scap='Intensity Peak and Species Length Date Overlap'}
+
+The second was to compare changes in qualitative condition by total length over time.
+![Image 2](results/img/cum_length_year.png){fig-scap='Total Length and Condition by Date'}
+
+
+The third was to make a map that showed the geographical distribution of population density for each species, and ideally, overlay it with one showing intensity distribution of Marine Heatwaves.
+![Map](results/img/final_map.png){fig-scap='Population Density and Geographical Habitat Spread'}
+
+## References
+
+The analysis of biological data / Michael C. Whitlock and Dolph Schluter.
+Whitlock, Michael, author.; Austin ; Boston ; New York ; Plymouth : Macmillan Learning
+2020
+
